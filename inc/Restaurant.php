@@ -9,12 +9,12 @@
   <hr class="line">
   <div class="box-container">
 
-  <?php $q = mysqli_query($mysql, "SELECT * FROM Restaurant");
+  <?php $q = mysqli_query($mysql, "SELECT * FROM product_image");
   while ($row = mysqli_fetch_assoc($q)) { ?>
     <div class="box">
       <a href="barbeque.html">
-      <img src="<?= $row['RestaurantImage'] ?>" height="150"> </a>
-      <h3><?=$row['RestaurantID']?></h3>
+      <img src="<?= $row['productID'] ?>" height="150"> </a>
+      <!-- <h3><?=$row['RestaurantID']?></h3> -->
       <div class="stars">
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>
