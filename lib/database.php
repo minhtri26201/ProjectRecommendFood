@@ -1,13 +1,13 @@
 <?php
     $filepath = realpath(dirname(__FILE__));
-    include ($filepath.'/../config/config.php');
+    include (__DIR__.'/../config/config.php');
 ?>
 <?php
     class Database {
-        public $db_host = localhost;
-        public $db_user = root;
-        public $db_pass = password;
-        public $db_name = database_pjvutri;
+        public $db_host = "localhost";
+        public $db_user = "root";
+        public $db_pass = "password";
+        public $db_name = "database_pjvutri";
 
         public $link;
         public $error;
