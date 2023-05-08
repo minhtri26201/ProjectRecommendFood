@@ -34,6 +34,14 @@ session_start();
 
         echo 'TOTAL PRICE:  '.$total;
         ?>
+
+
+<label>Payment Type:</label>
+<select class="form-control" id="payment_type">
+    <option value="tienmat">Cash</option>
+    <option value="atm">ATM</option>
+</select>
+
 <button onclick="thanhtoan()">Oder Now</button>
 <?php
         exit;
@@ -54,6 +62,7 @@ localStorage.removeItem("cart");
 </script>
 <?php
         $u = $_SESSION['username'];
+        $t = $_GET['t'];
         $c_id = $DB->get_row("SELECT * FROM `tbl_customer` WHERE user = '$u'")['customerID'];
         // var_dump($c_id); exit;
 
@@ -61,11 +70,19 @@ localStorage.removeItem("cart");
         $DB->insert('`tbl_order`', [
             'productID' => json_encode($orders),
             'customerID' => $c_id,
-            'price' => $total
+            'price' => $total,
+            'payment' => $t
         ]);
-
-        echo '<script>alert("Order Success! amount of money: " + '.$total.')</script>';
-        exit;
+        ?>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Notice',
+            text: 'Order Success!'
+        })
+        
+<?php
     }
 ?>
 
@@ -77,7 +94,9 @@ localStorage.removeItem("cart");
 $("#cart").load('/cart.php?order=' + window.localStorage.getItem('cart'));
 
 function thanhtoan() {
-    $("#thanhtoan").load('/cart.php?thanhtoan=' + window.localStorage.getItem('cart'));
+    let t = $("#payment_type").val();
+
+    $("#thanhtoan").load('/cart.php?thanhtoan=' + window.localStorage.getItem('cart') + '&t=' +t);
     setTimeout(() => {
         $("#cart").load('/cart.php?order=' + window.localStorage.getItem('cart'));
     }, 1000);

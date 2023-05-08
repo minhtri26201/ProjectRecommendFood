@@ -10,6 +10,13 @@
     }
 ?>
 
+<div>
+    <a href="/admin/create_product.php">
+        <button class="btn btn-success">Add product</button></a>
+</div>  
+
+<br>
+
 <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
     <thead>
         <tr>
@@ -24,7 +31,7 @@
         <?php
         foreach($DB->get_list("SELECT * FROM `tbl_product`") as $product){
             $product_id = $product['productID'];
-            $img = $DB->get_row("SELECT * FROM `tbl_product_image` WHERE `productID` = $product_id")['productImage'];
+            $img = $DB->get_row("SELECT * FROM `tbl_product_image` WHERE `productID` = $product_id")['productImage'] ?? '';
         ?>
         <tr>
             <td><?=$product['productID']?></td>

@@ -34,13 +34,13 @@
 <script>
 Swal.fire({
     icon: 'error',
-    title: 'Thong bao',
+    title: 'Notice',
     text: 'Incorrect account or password'
 })
 
 setTimeout(() => {
     window.location = '/index.php?act=dangnhap';
-}, 1000);
+}, 2000);
 </script>
 <?php
                     
@@ -71,6 +71,12 @@ setTimeout(() => {
                     $password = $_POST['password'];
                     $phone = $_POST['phone'];
                     $email = $_POST['email'];
+                    // $user = $DB->get_row("SELECT * FROM `tbl_customer` WHERE user = '$$username' AND pass = '$password'");
+                    // $user = $DB->get_row("SELECT * FROM `tbl_customer` WHERE 'user' = '$username'");
+                    // if
+                    //     header("Location: /login.php?error= tai khoan da co nguoi tao truoc");
+                    //     exit();
+
 
                     if( empty($fullname) ){
                         $_SESSION['name_error'] = 'cannot be left blank';
@@ -83,7 +89,23 @@ setTimeout(() => {
                         header('location: index.php?act=dangky');
                         exit;
                     }
+                    if( empty($password) ){
+                        $_SESSION['password_error'] = 'cannot be left blank';
+                        header('location: index.php?act=dangky');
+                        exit;
+                    
+                       }
 
+
+                    if( $DB->num_rows("SELECT * FROM `tbl_customer`  WHERE user='$username'") >=1)
+                    {
+                        $_SESSION['username_error'] = 'username da ton tai';
+                        header('location: index.php?act=dangky');
+
+                     exit;
+                    }
+
+                    
                     if( $DB->insert(
                         '`tbl_customer`',
                         [
@@ -99,7 +121,7 @@ setTimeout(() => {
 <script>
 Swal.fire({
     icon: 'success',
-    title: 'Thong bao',
+    title: 'Notice',
     text: 'Registered successfully!'
 })
 </script>

@@ -59,6 +59,8 @@
             <th>Custom ID</th>
             <th>Price</th>
             <th>Status</th>
+            <th>Payment type:</th>
+
             <th>Action</th>
         </tr>
     </thead>
@@ -72,10 +74,15 @@
             <td><?=$product['customerID']?></td>
             <td><?=$product['price']?></td>
             <td><?=$product['status']?></td>
+
+            <td><?=$product['payment']?></td>
+
+
+
             <td>
 
                 <a onclick="viewOrder(<?=json_encode(json_decode($product['productID']))?>)">
-                    <button type="button" class="btn btn-primary">Xem san pham</button>
+                    <button type="button" class="btn btn-primary">Show list</button>
                 </a>
 
                 <hr>
@@ -89,7 +96,7 @@
                         <option value="complete" <?=$product['status']=='complete'?'selected':''?>>Complete</option>
                         <option value="cancel" <?=$product['status']=='cancel'?'selected':''?>>Cancel</option>
                     </select><br>
-                    <button name="update" class="btn btn-warning">Cập nhật</button>
+                    <button name="update" class="btn btn-warning">Update</button>
                 </form>
             </td>
         </tr>
@@ -110,7 +117,7 @@
 
 <button style="display: none;" type="button" class="btn mr-2 mb-2 btn-primary" data-toggle="modal"
     data-target="#exampleModal" id="exampleModa3">
-    Basic Modal
+    Orders
 </button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -129,7 +136,7 @@ function viewOrder(i) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">List orders</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

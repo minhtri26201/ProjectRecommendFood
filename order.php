@@ -72,7 +72,7 @@ tfoot {
             <th>Custom ID</th>
             <th>Price</th>
             <th>Status</th>
- 
+            <th>payment</th>
         </tr>
     </thead>
     <tbody>
@@ -87,7 +87,7 @@ tfoot {
             <td><?=$product['customerID']?></td>
             <td><?=$product['price']?></td>
             <td><?=$product['status']?></td>
-
+            <td><?=$product['payment']?></td>
         <?php
         }
         ?>

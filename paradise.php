@@ -31,7 +31,8 @@ session_start();
             <i class="fas fa-search" id="search-icon"></i>
             <a href="#" class="fas fa-heart"></a>
             <a href="#" class="fas fa-shopping-cart" onclick="showCart()"></a>
-            <i class="fa fa-user" aria-hidden="true"></i>
+            <a href="/order.php"><i class="fas fa-user" aria-hidden="true"></i></a>
+
             <a href="logout.php" class="fas fa-sign-in-alt"></a>
             
         </div>
