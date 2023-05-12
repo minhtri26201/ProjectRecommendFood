@@ -25,7 +25,7 @@ session_start();
             <a href="#" onclick="openAbout()">about</a>
             <a href="./contact.html" >Contact us</a>
             <a class="feed" id="feedback">feedback</a>
-            <a href="#">Orders</a>
+
         </nav>
         <div class="icons">
             <i class="fas fa-bars" id="menu-bars"></i>
@@ -100,6 +100,7 @@ session_start();
         var m =  document.getElementById("cmodal2");
         function showCart(){
             m.style.display="block";
+            $("#cmodal").load('/cart.php');
         }
 
         $("#cmodalclose").click(()=>{

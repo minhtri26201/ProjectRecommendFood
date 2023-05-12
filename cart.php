@@ -4,10 +4,36 @@ session_start();
 
     if( isset($_GET['order']) ){
 
-        $orders = json_decode( $_GET['order'], true ) ?? [];
+        $orders2 = json_decode( $_GET['order'], true ) ?? [];
         $total = 0;
         $x = -1;
+
+        $orders = [];
+        foreach($orders2 as $o){
+            $check = true;
+
+            foreach($orders as $o2){
+                if($o == $o2){
+                    $check = false;
+                }
+            }
+
+            if($check){
+                $orders[] = $o;
+            }
+        }
+
         foreach($orders as $order){
+
+            $sl = 0;
+            foreach($orders2 as $o){
+                if($order == $o){
+                    $sl++;
+                }
+            }
+
+            // echo $sl; exit;
+
             $x++;
 
             $o = $DB->get_row("SELECT * FROM `tbl_product` WHERE productID = $order");
@@ -24,6 +50,11 @@ session_start();
         </ul>
     </div>
     <div>
+    Số lượng: <input type="number" value="<?=$sl?>" readonly>
+        <button onclick="upc(<?=$o['productID']?>)">+</button>
+        <button onclick="downc(<?=$o['productID']?>)">-</button>
+       
+        <br>
       <button onclick="deleteCart(<?=$x?>)">delete</button>
     </div>
 
@@ -50,6 +81,7 @@ session_start();
     if( isset($_GET['thanhtoan']) ){
        
         $orders = json_decode( $_GET['thanhtoan'], true ) ?? [];
+        
         $total = 0;
         foreach($orders as $order){
             $o = $DB->get_row("SELECT * FROM `tbl_product` WHERE productID = $order");
@@ -94,16 +126,64 @@ localStorage.removeItem("cart");
 $("#cart").load('/cart.php?order=' + window.localStorage.getItem('cart'));
 
 function thanhtoan() {
+    if(!window.localStorage.getItem('cart')){
+        alert('Gio hang rong');
+        return;
+    }
+
     let t = $("#payment_type").val();
 
     $("#thanhtoan").load('/cart.php?thanhtoan=' + window.localStorage.getItem('cart') + '&t=' +t);
     setTimeout(() => {
         $("#cart").load('/cart.php?order=' + window.localStorage.getItem('cart'));
+        alert('Ban da dat hang thanh cong');
     }, 1000);
 }
 
+
+function upc(id) {
+    var a = JSON.parse(window.localStorage.getItem('cart'));
+    var b = a;
+    b.push(id);
+
+    b = JSON.stringify(b);
+        window.localStorage.setItem('cart', b);
+
+    $("#cart").load('/cart.php?order=' + window.localStorage.getItem('cart'));
+}
+
+
+function downc(id) {
+    var a = JSON.parse(window.localStorage.getItem('cart'));
+
+    var count = 0;
+    for(i in a){
+        if(a[i] == id){
+            count++;
+        }
+    }
+    if(count <= 1){
+        return;
+    }
+
+    var b = a.reverse();
+    for(i in b){
+        if(b[i] == id){
+            b.splice(i, 1);
+            break;
+        }
+    }
+    b = b.reverse();
+
+    b = JSON.stringify(b);
+        window.localStorage.setItem('cart', b);
+
+    $("#cart").load('/cart.php?order=' + window.localStorage.getItem('cart'));
+}
+
 function deleteCart(id){
-    setTimeout(() => {
+    if(confirm("Ban co chac muon xoa khong")){
+        setTimeout(() => {
         var a = JSON.parse(window.localStorage.getItem('cart'));
         let b = [];
         for(i in a){
@@ -117,5 +197,7 @@ function deleteCart(id){
 
         $("#cart").load('/cart.php?order=' + window.localStorage.getItem('cart'));
     }, 1000);
+}
+   
 }
 </script>

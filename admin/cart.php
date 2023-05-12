@@ -12,12 +12,36 @@
     }
 
     if( isset($_GET['id']) ){
-
-        $orders = json_decode( $_GET['id'], true ) ?? [];
+        // echo 123; exit;
+        $orders2 = json_decode( $_GET['id'], true ) ?? [];
         $total = 0;
         $x = -1;
+
+
+        $orders = [];
+        foreach($orders2 as $o){
+            $check = true;
+
+            foreach($orders as $o2){
+                if($o == $o2){
+                    $check = false;
+                }
+            }
+
+            if($check){
+                $orders[] = $o;
+            }
+        }
+
         foreach($orders as $order){
             
+            $sl = 0;
+            foreach($orders2 as $o){
+                if($order == $o){
+                    $sl++;
+                }
+            }
+
             $x++;
 
             $o = $DB->get_row("SELECT * FROM `tbl_product` WHERE productID = $order");
@@ -30,7 +54,9 @@
         <ul>
             <li>Product name: <?=$o['productName']?></li>
             <li>Price: <?=$o['productPrice']?></li>
+            <li>Số lượng: <input type="number" value="<?=$sl?>" readonly></li>
             <li><img src="/view/images/Dishes/<?=$img?>" style="with: 100px; height: 100px;"></li>
+            
         </ul>
     </div>
     <div>
@@ -128,6 +154,12 @@ function viewOrder(i) {
     i = JSON.stringify(i);
     $("#dx").load("/admin/cart.php?id=" + i);
 }
+
+$(document).ready(function(){
+    setTimeout(() => {
+        $(".sorting_asc").click();
+    }, 2500);
+});
 </script>
 
 

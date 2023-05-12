@@ -24,7 +24,7 @@ session_start();
             <a href="#" onclick="openAbout()">about</a>
             <a href="./contact.html" >Contact us</a>
             <a class="feed" id="feedback">feedback</a>
-            <a href="#">Orders</a>
+
         </nav>
         <div class="icons">
             <i class="fas fa-bars" id="menu-bars"></i>
@@ -99,6 +99,7 @@ session_start();
         var m =  document.getElementById("cmodal2");
         function showCart(){
             m.style.display="block";
+            $("#cmodal").load('/cart.php');
         }
 
         $("#cmodalclose").click(()=>{
@@ -300,7 +301,6 @@ src="https://www.youtube.com/embed/zc8DJMgkQR4?autoplay=1&mute=1&loop=1&playlist
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>
         <i class="fas fa-star-half-alt"></i>
-
     </div>
     <span><?=number_format($product['productPrice'])?>d</span>
     <br>

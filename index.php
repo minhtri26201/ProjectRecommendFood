@@ -1,6 +1,7 @@
 <?php
     session_start();
     ob_start();
+    
     include "lib/db.php";
     include "view/header.php";
     include "model/category.php";
